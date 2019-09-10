@@ -8,7 +8,6 @@ cookies=''#######need your cookie#########
 headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
 d_cookie={}
 topthread=''
-#state=False
 isbreak=True
 isfirst=True
 mesg=''
@@ -23,15 +22,12 @@ def getcookie():
 
 def getformhash():
 	r=requests.get(url='http://***/forum.php?mod=forumdisplay&fid=**&filter=author&orderby=dateline',headers=headers,cookies=d_cookie)
-	#print r.content
 	soup=BeautifulSoup(r.content,'html5lib')
 	div=soup.findAll('div',attrs={'class':'hasfsl'})
 	for d in div:
-		#print d
 		input=d.findAll('input',attrs={'name':'formhash'})
 		for i in input:
 			formhash=i['value']
-			#print i['value']
 			return formhash
 	
 def replydata(number,formhash):
@@ -55,14 +51,11 @@ def gettitle():
 		isbreak=False
 		res=requests.get(url=url,headers=headers,cookies=d_cookie)
 		res.encoding='utf-8'
-		#print res.text
 		soup=BeautifulSoup(res.content,'html5lib')
 		for line in soup.findAll('table',attrs={'summary':"forum_38"}):
 			id=line.findAll('tbody',attrs={'id':True})
 			isfirst=True
-			#print id[0]
 			for l in id:
-				#print l['id']
 				if l['id'].startswith('normalthread'):
 					a=l.findAll('a',attrs={'class':'xst'})
 					for a1 in a:
